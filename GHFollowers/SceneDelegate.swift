@@ -17,6 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController = createTabBar()
         window?.makeKeyAndVisible()
+
+        UINavigationBar.appearance().tintColor = .systemGreen
     }
 
     func createSearchNavigation() -> UINavigationController {
