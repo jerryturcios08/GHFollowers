@@ -10,7 +10,7 @@ import UIKit
 class GFButton: UIButton {
     override var isHighlighted: Bool {
         didSet {
-            layer.opacity = isHighlighted ? 0.8 : 1
+            layer.opacity = isHighlighted ? 0.5 : 1
         }
     }
 
