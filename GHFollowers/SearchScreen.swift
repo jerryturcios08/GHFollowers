@@ -46,7 +46,7 @@ class SearchScreen: UIViewController {
 
     @objc private func pushFollowerListScreen() {
         guard isUsernameEntered else {
-            print("No username")
+            presentGFAlertOnMainThread(title: "Empty username", message: "Please enter a username. We need to know who to look for 😀.", buttonTitle: "Okay")
             return
         }
 
