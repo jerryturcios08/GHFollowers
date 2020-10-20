@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6AF0B5C253F8AF900C08089 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AF0B5B253F8AF900C08089 /* constants.swift */; };
 		C6CFFA8D253E38CC006FDB5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CFFA8C253E38CC006FDB5F /* AppDelegate.swift */; };
 		C6CFFA8F253E38CC006FDB5F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CFFA8E253E38CC006FDB5F /* SceneDelegate.swift */; };
 		C6CFFA96253E38CE006FDB5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6CFFA95253E38CE006FDB5F /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C6AF0B5B253F8AF900C08089 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		C6CFFA89253E38CC006FDB5F /* GHFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6CFFA8C253E38CC006FDB5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6CFFA8E253E38CC006FDB5F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +53,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C6AF0B54253F8A7400C08089 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				C6CFFAA7253E3DA9006FDB5F /* FavoritesListScreen.swift */,
+				C6CFFAB3253E54F9006FDB5F /* FollowerListScreen.swift */,
+				C6CFFAA4253E3D73006FDB5F /* SearchScreen.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		C6AF0B55253F8AAA00C08089 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				C6DF0AB8253F802F0009A407 /* GFAlertScreen.swift */,
+				C6DF0AB5253F7F730009A407 /* GFBodyLabel.swift */,
+				C6CFFAAB253E445F006FDB5F /* GFButton.swift */,
+				C6CFFAAF253E4794006FDB5F /* GFTextField.swift */,
+				C6DF0AB2253F7D840009A407 /* GFTitleLabel.swift */,
+			);
+			path = Subclasses;
+			sourceTree = "<group>";
+		};
+		C6AF0B56253F8AD900C08089 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C6AF0B58253F8ADF00C08089 /* Extensions */,
+				C6AF0B5B253F8AF900C08089 /* constants.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		C6AF0B58253F8ADF00C08089 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C6DF0ABD253F85F20009A407 /* UIViewController+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		C6CFFA80253E38CC006FDB5F = {
 			isa = PBXGroup;
 			children = (
@@ -70,20 +111,14 @@
 		C6CFFA8B253E38CC006FDB5F /* GHFollowers */ = {
 			isa = PBXGroup;
 			children = (
+				C6AF0B54253F8A7400C08089 /* Screens */,
+				C6AF0B55253F8AAA00C08089 /* Subclasses */,
+				C6AF0B56253F8AD900C08089 /* Utilities */,
 				C6CFFA8C253E38CC006FDB5F /* AppDelegate.swift */,
 				C6CFFA95253E38CE006FDB5F /* Assets.xcassets */,
-				C6CFFAA7253E3DA9006FDB5F /* FavoritesListScreen.swift */,
-				C6CFFAB3253E54F9006FDB5F /* FollowerListScreen.swift */,
-				C6DF0AB8253F802F0009A407 /* GFAlertScreen.swift */,
-				C6DF0AB5253F7F730009A407 /* GFBodyLabel.swift */,
-				C6CFFAAB253E445F006FDB5F /* GFButton.swift */,
-				C6CFFAAF253E4794006FDB5F /* GFTextField.swift */,
-				C6DF0AB2253F7D840009A407 /* GFTitleLabel.swift */,
 				C6CFFA9A253E38CE006FDB5F /* Info.plist */,
 				C6CFFA97253E38CE006FDB5F /* LaunchScreen.storyboard */,
 				C6CFFA8E253E38CC006FDB5F /* SceneDelegate.swift */,
-				C6CFFAA4253E3D73006FDB5F /* SearchScreen.swift */,
-				C6DF0ABD253F85F20009A407 /* UIViewController+Ext.swift */,
 			);
 			path = GHFollowers;
 			sourceTree = "<group>";
@@ -168,6 +203,7 @@
 				C6CFFA8F253E38CC006FDB5F /* SceneDelegate.swift in Sources */,
 				C6CFFAA5253E3D73006FDB5F /* SearchScreen.swift in Sources */,
 				C6CFFAA8253E3DA9006FDB5F /* FavoritesListScreen.swift in Sources */,
+				C6AF0B5C253F8AF900C08089 /* constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
