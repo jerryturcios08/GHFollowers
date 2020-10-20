@@ -56,9 +56,8 @@
 		C6AF0B54253F8A7400C08089 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				C6CFFAA7253E3DA9006FDB5F /* FavoritesListScreen.swift */,
-				C6CFFAB3253E54F9006FDB5F /* FollowerListScreen.swift */,
-				C6CFFAA4253E3D73006FDB5F /* SearchScreen.swift */,
+				C6EEDDB0253F8D7900788179 /* Favorites */,
+				C6EEDDAE253F8D7400788179 /* Search */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -121,6 +120,23 @@
 				C6CFFA8E253E38CC006FDB5F /* SceneDelegate.swift */,
 			);
 			path = GHFollowers;
+			sourceTree = "<group>";
+		};
+		C6EEDDAE253F8D7400788179 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				C6CFFAB3253E54F9006FDB5F /* FollowerListScreen.swift */,
+				C6CFFAA4253E3D73006FDB5F /* SearchScreen.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		C6EEDDB0253F8D7900788179 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				C6CFFAA7253E3DA9006FDB5F /* FavoritesListScreen.swift */,
+			);
+			path = Favorites;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
