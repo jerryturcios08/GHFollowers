@@ -32,11 +32,6 @@ class SearchScreen: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-
     // MARK: - Defined methods
 
     private func createDismissKeyboardTapGesture() {
