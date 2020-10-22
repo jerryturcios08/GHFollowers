@@ -20,6 +20,7 @@ class FollowerListScreen: UIViewController {
     var filteredFollowers = [Follower]()
     var page = 1
     var hasMoreFollowers = true
+    var isSearching = false
 
     // MARK: - Lifecycle methods
 
@@ -107,6 +108,16 @@ class FollowerListScreen: UIViewController {
 // MARK: - Collection view methods
 
 extension FollowerListScreen: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let activeArray = isSearching ? filteredFollowers : followers
+        let follower = activeArray[indexPath.item]
+
+        let destinationScreen = UserInfoScreen(username: follower.login)
+        let navigationController = UINavigationController(rootViewController: destinationScreen)
+
+        present(navigationController, animated: true)
+    }
+
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard hasMoreFollowers else { return }
 
@@ -116,6 +127,7 @@ extension FollowerListScreen: UICollectionViewDelegate {
 
         if offsetY > contentHeight - height {
             page += 1
+            isSearching = false
             getFollowers()
         }
     }
@@ -126,12 +138,14 @@ extension FollowerListScreen: UICollectionViewDelegate {
 extension FollowerListScreen: UISearchBarDelegate, UISearchResultsUpdating  {
     func updateSearchResults(for searchController: UISearchController) {
         guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+        isSearching = true
         filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
         updateData(on: filteredFollowers)
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         // Updates the collection view with the initial followers array when search ends
+        isSearching = false
         updateData(on: followers)
     }
 }
