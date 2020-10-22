@@ -14,8 +14,8 @@
 		C64732D1253F8F1800D7BD9E /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64732D0253F8F1800D7BD9E /* Follower.swift */; };
 		C64732D4253F8FED00D7BD9E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64732D3253F8FED00D7BD9E /* User.swift */; };
 		C64732D8253F959A00D7BD9E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64732D7253F959A00D7BD9E /* NetworkManager.swift */; };
-		C64732DC253F9E0500D7BD9E /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64732DB253F9E0500D7BD9E /* ErrorMessage.swift */; };
 		C686E16C25423A6100CAF25A /* UserInfoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C686E16B25423A6100CAF25A /* UserInfoScreen.swift */; };
+		C686E170254242B300CAF25A /* GFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C686E16F254242B300CAF25A /* GFError.swift */; };
 		C6CFFA8D253E38CC006FDB5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CFFA8C253E38CC006FDB5F /* AppDelegate.swift */; };
 		C6CFFA8F253E38CC006FDB5F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CFFA8E253E38CC006FDB5F /* SceneDelegate.swift */; };
 		C6CFFA96253E38CE006FDB5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6CFFA95253E38CE006FDB5F /* Assets.xcassets */; };
@@ -39,8 +39,8 @@
 		C64732D0253F8F1800D7BD9E /* Follower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		C64732D3253F8FED00D7BD9E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C64732D7253F959A00D7BD9E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		C64732DB253F9E0500D7BD9E /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		C686E16B25423A6100CAF25A /* UserInfoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoScreen.swift; sourceTree = "<group>"; };
+		C686E16F254242B300CAF25A /* GFError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFError.swift; sourceTree = "<group>"; };
 		C6CFFA89253E38CC006FDB5F /* GHFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6CFFA8C253E38CC006FDB5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6CFFA8E253E38CC006FDB5F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -169,8 +169,8 @@
 			isa = PBXGroup;
 			children = (
 				C6AF0B58253F8ADF00C08089 /* Extensions */,
-				C64732DB253F9E0500D7BD9E /* ErrorMessage.swift */,
 				C604A7FE2540D708009CA74F /* UIHelper.swift */,
+				C686E16F254242B300CAF25A /* GFError.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -315,13 +315,13 @@
 				C6CFFAB4253E54F9006FDB5F /* FollowerListScreen.swift in Sources */,
 				C64732D4253F8FED00D7BD9E /* User.swift in Sources */,
 				C604A7F82540C2CA009CA74F /* FollowerCell.swift in Sources */,
+				C686E170254242B300CAF25A /* GFError.swift in Sources */,
 				C6DF0AB6253F7F730009A407 /* GFBodyLabel.swift in Sources */,
 				C64732D1253F8F1800D7BD9E /* Follower.swift in Sources */,
 				C6DF0AB3253F7D840009A407 /* GFTitleLabel.swift in Sources */,
 				C6CFFA8F253E38CC006FDB5F /* SceneDelegate.swift in Sources */,
 				C604A80D25410815009CA74F /* GFEmptyStateView.swift in Sources */,
 				C6CFFAA5253E3D73006FDB5F /* SearchScreen.swift in Sources */,
-				C64732DC253F9E0500D7BD9E /* ErrorMessage.swift in Sources */,
 				C64732D8253F959A00D7BD9E /* NetworkManager.swift in Sources */,
 				C6CFFAA8253E3DA9006FDB5F /* FavoritesListScreen.swift in Sources */,
 			);
