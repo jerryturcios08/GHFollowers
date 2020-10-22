@@ -8,7 +8,7 @@
 import UIKit
 
 class GFAvatarImageView: UIImageView {
-    let placeholderImage = UIImage(named: "avatar-placeholder")
+    static let placeholderImage = UIImage(named: "avatar-placeholder")
     let cache = NetworkManager.shared.cache
 
     override init(frame: CGRect) {
@@ -31,6 +31,6 @@ class GFAvatarImageView: UIImageView {
         translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 10
         clipsToBounds = true
-        image = placeholderImage
+        image = GFAvatarImageView.placeholderImage
     }
 }

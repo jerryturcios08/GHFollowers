@@ -30,6 +30,11 @@ class FollowerCell: UICollectionViewCell {
 
     // MARK: - Defined methods
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        avatarImageView.image = GFAvatarImageView.placeholderImage
+    }
+
     func set(follower: Follower) {
         usernameLabel.text = follower.login
         avatarImageView.setImage(from: follower.avatarUrl)
