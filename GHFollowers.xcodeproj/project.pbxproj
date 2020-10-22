@@ -169,8 +169,8 @@
 			isa = PBXGroup;
 			children = (
 				C6AF0B58253F8ADF00C08089 /* Extensions */,
-				C604A7FE2540D708009CA74F /* UIHelper.swift */,
 				C686E16F254242B300CAF25A /* GFError.swift */,
+				C604A7FE2540D708009CA74F /* UIHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
