@@ -17,6 +17,7 @@ class FollowerListScreen: UIViewController {
 
     var username: String!
     var followers = [Follower]()
+    var filteredFollowers = [Follower]()
     var page = 1
     var hasMoreFollowers = true
 
@@ -26,6 +27,7 @@ class FollowerListScreen: UIViewController {
         super.viewDidLoad()
         configureScreen()
         configureCollectionView()
+        configureSearchController()
         getFollowers()
         configureDataSource()
     }
@@ -50,6 +52,15 @@ class FollowerListScreen: UIViewController {
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseId)
     }
 
+    private func configureSearchController() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search for a username"
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+    }
+
     private func getFollowers() {
         showLoadingView()
 
@@ -67,7 +78,7 @@ class FollowerListScreen: UIViewController {
                     let message = "This user doesn't have any followers. Go follow them 😀."
                     DispatchQueue.main.async { self.showEmptyStateView(with: message, in: self.view) }
                 } else {
-                    self.updateData()
+                    self.updateData(on: followers)
                 }
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Okay")
@@ -85,7 +96,7 @@ class FollowerListScreen: UIViewController {
         }
     }
 
-    private func updateData() {
+    private func updateData(on followers: [Follower]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
@@ -107,5 +118,20 @@ extension FollowerListScreen: UICollectionViewDelegate {
             page += 1
             getFollowers()
         }
+    }
+}
+
+// MARK: - Search methods
+
+extension FollowerListScreen: UISearchBarDelegate, UISearchResultsUpdating  {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+        filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
+        updateData(on: filteredFollowers)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // Updates the collection view with the initial followers array when search ends
+        updateData(on: followers)
     }
 }
