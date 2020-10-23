@@ -53,7 +53,7 @@ class GFItemInfoView: UIView {
     }
 
     private func configureCountLabel() {
-        addSubview(titleLabel)
+        addSubview(countLabel)
 
         NSLayoutConstraint.activate([
             countLabel.topAnchor.constraint(equalTo: symbolImageView.bottomAnchor, constant: 4),

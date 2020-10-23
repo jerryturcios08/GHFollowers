@@ -15,7 +15,20 @@ class GFItemInfoViewController: UIViewController {
     let secondItemInfoView = GFItemInfoView()
     let actionButton = GFButton()
 
+    var user: User
+
     let padding: CGFloat = 20
+
+    // MARK: - Initializers
+
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Lifecycle methods
 

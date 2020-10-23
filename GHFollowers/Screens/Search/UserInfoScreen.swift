@@ -60,9 +60,6 @@ class UserInfoScreen: UIViewController {
             ])
         }
 
-        firstItemView.backgroundColor = .systemPink
-        secondItemView.backgroundColor = .systemBlue
-
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 180),
@@ -89,6 +86,8 @@ class UserInfoScreen: UIViewController {
     private func addChildViewControllers(user: User) {
         DispatchQueue.main.async {
             self.add(GFUserInfoHeaderViewController(user: user), to: self.headerView)
+            self.add(GFRepoItemViewController(user: user), to: self.firstItemView)
+            self.add(GFFollowerItemViewController(user: user), to: self.secondItemView)
         }
     }
 
