@@ -8,9 +8,16 @@
 import UIKit
 
 class UserInfoScreen: UIViewController {
+    // MARK: - Properties
+
     let headerView = UIView()
+    let firstItemView = UIView()
+    let secondItemView = UIView()
+    var itemViews = [UIView]()
 
     private var username: String
+
+    // MARK: - Initializers
 
     init(username: String) {
         self.username = username
@@ -21,14 +28,52 @@ class UserInfoScreen: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Lifecycle methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureScreen()
+        configureLayout()
+        getUserInfo()
+    }
+
+    // MARK: - Defined methods
+
+    private func configureScreen() {
         view.backgroundColor = .systemBackground
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissScreen))
         navigationItem.rightBarButtonItem = doneButton
+    }
 
-        configureHeaderView()
+    private func configureLayout() {
+        let padding: CGFloat = 20
+        let itemHeight: CGFloat = 140
+        itemViews = [headerView, firstItemView, secondItemView]
 
+        for itemView in itemViews {
+            view.addSubview(itemView)
+            itemView.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                itemView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+                itemView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            ])
+        }
+
+        firstItemView.backgroundColor = .systemPink
+        secondItemView.backgroundColor = .systemBlue
+
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 180),
+            firstItemView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
+            firstItemView.heightAnchor.constraint(equalToConstant: itemHeight),
+            secondItemView.topAnchor.constraint(equalTo: firstItemView.bottomAnchor, constant: padding),
+            secondItemView.heightAnchor.constraint(equalToConstant: itemHeight)
+        ])
+    }
+
+    private func getUserInfo() {
         NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
             guard let self = self else { return }
 
@@ -39,18 +84,6 @@ class UserInfoScreen: UIViewController {
                 self.presentGFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Okay")
             }
         }
-    }
-
-    private func configureHeaderView() {
-        view.addSubview(headerView)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 180)
-        ])
     }
 
     private func addChildViewControllers(user: User) {
@@ -65,6 +98,8 @@ class UserInfoScreen: UIViewController {
         childViewController.view.frame = containerView.bounds
         childViewController.didMove(toParent: self)
     }
+
+    // MARK: - Action methods
 
     @objc private func dismissScreen() {
         dismiss(animated: true)
