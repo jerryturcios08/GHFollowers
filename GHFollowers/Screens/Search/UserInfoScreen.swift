@@ -13,6 +13,7 @@ class UserInfoScreen: UIViewController {
     let headerView = UIView()
     let firstItemView = UIView()
     let secondItemView = UIView()
+    let dateLabel = GFBodyLabel(textAlignment: .center)
     var itemViews = [UIView]()
 
     private var username: String
@@ -48,7 +49,7 @@ class UserInfoScreen: UIViewController {
     private func configureLayout() {
         let padding: CGFloat = 20
         let itemHeight: CGFloat = 140
-        itemViews = [headerView, firstItemView, secondItemView]
+        itemViews = [headerView, firstItemView, secondItemView, dateLabel]
 
         for itemView in itemViews {
             view.addSubview(itemView)
@@ -66,7 +67,9 @@ class UserInfoScreen: UIViewController {
             firstItemView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
             firstItemView.heightAnchor.constraint(equalToConstant: itemHeight),
             secondItemView.topAnchor.constraint(equalTo: firstItemView.bottomAnchor, constant: padding),
-            secondItemView.heightAnchor.constraint(equalToConstant: itemHeight)
+            secondItemView.heightAnchor.constraint(equalToConstant: itemHeight),
+            dateLabel.topAnchor.constraint(equalTo: secondItemView.bottomAnchor, constant: padding),
+            dateLabel.heightAnchor.constraint(equalToConstant: 18)
         ])
     }
 
@@ -76,18 +79,15 @@ class UserInfoScreen: UIViewController {
 
             switch result {
             case .success(let user):
-                self.addChildViewControllers(user: user)
+                DispatchQueue.main.async {
+                    self.add(GFUserInfoHeaderViewController(user: user), to: self.headerView)
+                    self.add(GFRepoItemViewController(user: user), to: self.firstItemView)
+                    self.add(GFFollowerItemViewController(user: user), to: self.secondItemView)
+                    self.dateLabel.text = "GitHub since \(user.createdAt.convertToDisplayFormat())"
+                }
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Okay")
             }
-        }
-    }
-
-    private func addChildViewControllers(user: User) {
-        DispatchQueue.main.async {
-            self.add(GFUserInfoHeaderViewController(user: user), to: self.headerView)
-            self.add(GFRepoItemViewController(user: user), to: self.firstItemView)
-            self.add(GFFollowerItemViewController(user: user), to: self.secondItemView)
         }
     }
 
