@@ -5,6 +5,7 @@
 //  Created by Jerry Turcios on 10/20/20.
 //
 
+import SafariServices
 import UIKit
 
 fileprivate var containerView: UIView!
@@ -17,6 +18,12 @@ extension UIViewController {
             alert.modalTransitionStyle = .crossDissolve
             self.present(alert, animated: true)
         }
+    }
+
+    func presentSafariViewController(with url: URL) {
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.preferredControlTintColor = .systemGreen
+        present(safariViewController, animated: true)
     }
 
     func showLoadingView() {

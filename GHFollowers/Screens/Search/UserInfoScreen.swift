@@ -7,6 +7,13 @@
 
 import UIKit
 
+// MARK: - Delegate
+
+protocol UserInfoScreenDelegate: class {
+    func didTapGitHubProfile(for user: User)
+    func didTapGetFollowers(for user: User)
+}
+
 class UserInfoScreen: UIViewController {
     // MARK: - Properties
 
@@ -17,6 +24,7 @@ class UserInfoScreen: UIViewController {
     var itemViews = [UIView]()
 
     private var username: String
+    weak var delegate: FollowerListScreenDelegate!
 
     // MARK: - Initializers
 
@@ -79,16 +87,24 @@ class UserInfoScreen: UIViewController {
 
             switch result {
             case .success(let user):
-                DispatchQueue.main.async {
-                    self.add(GFUserInfoHeaderViewController(user: user), to: self.headerView)
-                    self.add(GFRepoItemViewController(user: user), to: self.firstItemView)
-                    self.add(GFFollowerItemViewController(user: user), to: self.secondItemView)
-                    self.dateLabel.text = "GitHub since \(user.createdAt.convertToDisplayFormat())"
-                }
+                DispatchQueue.main.async { self.configureUserInterfaceElements(with: user) }
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Okay")
             }
         }
+    }
+
+    private func configureUserInterfaceElements(with user: User) {
+        let repoItemViewController = GFRepoItemViewController(user: user)
+        repoItemViewController.delegate = self
+
+        let followerItemViewController = GFFollowerItemViewController(user: user)
+        followerItemViewController.delegate = self
+
+        self.add(GFUserInfoHeaderViewController(user: user), to: self.headerView)
+        self.add(repoItemViewController, to: self.firstItemView)
+        self.add(followerItemViewController, to: self.secondItemView)
+        self.dateLabel.text = "GitHub since \(user.createdAt.convertToDisplayFormat())"
     }
 
     private func add(_ childViewController: UIViewController, to containerView: UIView) {
@@ -102,5 +118,28 @@ class UserInfoScreen: UIViewController {
 
     @objc private func dismissScreen() {
         dismiss(animated: true)
+    }
+}
+
+// MARK: - User info methods
+
+extension UserInfoScreen: UserInfoScreenDelegate {
+    func didTapGitHubProfile(for user: User) {
+        guard let url = URL(string: user.htmlUrl) else {
+            presentGFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid.", buttonTitle: "Okay")
+            return
+        }
+
+        presentSafariViewController(with: url)
+    }
+
+    func didTapGetFollowers(for user: User) {
+        guard user.followers != 0 else {
+            presentGFAlertOnMainThread(title: "No followers", message: "\(user.name ?? "This user") has no followers. What a shame 😞.", buttonTitle: "So sad")
+            return
+        }
+
+        delegate.didRequestFollowers(for: user.login)
+        dismissScreen()
     }
 }

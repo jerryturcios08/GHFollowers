@@ -7,6 +7,12 @@
 
 import UIKit
 
+// MARK: - Delegate
+
+protocol FollowerListScreenDelegate: class {
+    func didRequestFollowers(for username: String)
+}
+
 class FollowerListScreen: UIViewController {
     // MARK: - Properties
 
@@ -113,6 +119,7 @@ extension FollowerListScreen: UICollectionViewDelegate {
         let follower = activeArray[indexPath.item]
 
         let destinationScreen = UserInfoScreen(username: follower.login)
+        destinationScreen.delegate = self
         let navigationController = UINavigationController(rootViewController: destinationScreen)
 
         present(navigationController, animated: true)
@@ -147,5 +154,20 @@ extension FollowerListScreen: UISearchBarDelegate, UISearchResultsUpdating  {
         // Updates the collection view with the initial followers array when search ends
         isSearching = false
         updateData(on: followers)
+    }
+}
+
+// MARK: - Follower list methods
+
+extension FollowerListScreen: FollowerListScreenDelegate {
+    func didRequestFollowers(for username: String) {
+        // Resets all values for screen before fetching followers for new user
+        self.username = username
+        title = username
+        page = 1
+        followers.removeAll()
+        filteredFollowers.removeAll()
+        updateData(on: followers)
+        getFollowers()
     }
 }

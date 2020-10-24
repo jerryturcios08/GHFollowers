@@ -16,6 +16,7 @@ class GFItemInfoViewController: UIViewController {
     let actionButton = GFButton()
 
     var user: User
+    weak var delegate: UserInfoScreenDelegate!
 
     let padding: CGFloat = 20
 
@@ -63,6 +64,7 @@ class GFItemInfoViewController: UIViewController {
 
     private func configureActionButton() {
         view.addSubview(actionButton)
+        actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
             actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding),
@@ -71,4 +73,6 @@ class GFItemInfoViewController: UIViewController {
             actionButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
+
+    @objc func actionButtonTapped() {}
 }
