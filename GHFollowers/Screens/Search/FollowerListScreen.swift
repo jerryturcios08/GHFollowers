@@ -49,6 +49,10 @@ class FollowerListScreen: UIViewController {
     private func configureScreen() {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
+
+        let heartImage = UIImage(systemName: "heart")
+        let heartButton = UIBarButtonItem(image: heartImage, style: .plain, target: self, action: #selector(heartButtonTapped))
+        navigationItem.rightBarButtonItem = heartButton
     }
 
     private func configureCollectionView() {
@@ -108,6 +112,12 @@ class FollowerListScreen: UIViewController {
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
         DispatchQueue.main.async { self.dataSource.apply(snapshot, animatingDifferences: true) }
+    }
+
+    // MARK: - Action methods
+
+    @objc private func heartButtonTapped() {
+        print("Heart button tapped")
     }
 }
 
