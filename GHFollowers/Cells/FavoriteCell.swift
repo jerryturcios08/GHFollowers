@@ -12,7 +12,7 @@ class FavoriteCell: UITableViewCell {
     let avatarImageView = GFAvatarImageView(frame: .zero)
     let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 26)
 
-    let padding: CGFloat = 12
+    let padding: CGFloat = 20
 
     // MARK: - Initializers
 
@@ -50,7 +50,7 @@ class FavoriteCell: UITableViewCell {
 
         NSLayoutConstraint.activate([
             usernameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            usernameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 24),
+            usernameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
             usernameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             usernameLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
