@@ -32,7 +32,6 @@ class FavoritesListScreen: UIViewController {
         view.backgroundColor = .systemBackground
         title = "Favorites"
         navigationController?.navigationBar.prefersLargeTitles = true
-        self.showEmptyStateView(with: "No favorites?\nAdd one on the follower list screen 😀.", in: self.view)
     }
 
     private func configureFavoritesTableView() {
@@ -48,16 +47,22 @@ class FavoritesListScreen: UIViewController {
         PersistenceManager.retrieveFavorites { [weak self] result in
             guard let self = self else { return }
 
+            self.view.subviews.forEach { subView in
+                if subView is GFEmptyStateView {
+                    subView.removeFromSuperview()
+                }
+            }
+
             switch result {
             case .success(let favorites):
                 if favorites.isEmpty {
                     self.favoritesTableView.isHidden = true
+                    self.showEmptyStateView(with: "No favorites?\nAdd one on the follower list screen 😀.", in: self.view)
                 } else {
                     self.favorites = favorites
                     DispatchQueue.main.async {
                         self.favoritesTableView.isHidden = false
                         self.favoritesTableView.reloadData()
-//                        self.view.bringSubviewToFront(self.favoritesTableView)
                     }
                 }
             case .failure(let error):
@@ -97,6 +102,7 @@ extension FavoritesListScreen: UITableViewDataSource, UITableViewDelegate {
 
         if favorites.isEmpty {
             favoritesTableView.isHidden = true
+            self.showEmptyStateView(with: "No favorites?\nAdd one on the follower list screen 😀.", in: self.view)
         }
 
         PersistenceManager.updateWith(favorite: favorite, actionType: .remove) { [weak self] error in

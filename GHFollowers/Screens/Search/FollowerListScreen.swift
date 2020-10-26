@@ -117,11 +117,9 @@ class FollowerListScreen: UIViewController {
     // MARK: - Action methods
 
     @objc private func heartButtonTapped() {
-        showLoadingView()
 
         NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
             guard let self = self else { return }
-            self.dismissLoadingView()
 
             switch result {
             case .success(let user):
