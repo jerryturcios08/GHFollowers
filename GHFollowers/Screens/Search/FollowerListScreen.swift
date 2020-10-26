@@ -27,6 +27,7 @@ class FollowerListScreen: GFDataLoadingViewController {
     var page = 1
     var hasMoreFollowers = true
     var isSearching = false
+    var isLoadingMoreFollowers = false
 
     init(username: String) {
         self.username = username
@@ -60,7 +61,7 @@ class FollowerListScreen: GFDataLoadingViewController {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
 
-        let heartImage = UIImage(systemName: "heart")
+        let heartImage = SFSymbols.followers
         let heartButton = UIBarButtonItem(image: heartImage, style: .plain, target: self, action: #selector(heartButtonTapped))
         navigationItem.rightBarButtonItem = heartButton
     }
@@ -76,7 +77,6 @@ class FollowerListScreen: GFDataLoadingViewController {
     private func configureSearchController() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search for a username"
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
@@ -84,6 +84,7 @@ class FollowerListScreen: GFDataLoadingViewController {
 
     private func getFollowers() {
         showLoadingView()
+        isLoadingMoreFollowers = true
 
         NetworkManager.shared.getFollowers(for: username, page: page) { [weak self] result in
             guard let self = self else { return }
@@ -104,6 +105,8 @@ class FollowerListScreen: GFDataLoadingViewController {
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Okay")
             }
+
+            self.isLoadingMoreFollowers = false
         }
     }
 
@@ -167,7 +170,7 @@ extension FollowerListScreen: UICollectionViewDelegate {
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard hasMoreFollowers else { return }
+        guard hasMoreFollowers, !isLoadingMoreFollowers else { return }
 
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -183,18 +186,18 @@ extension FollowerListScreen: UICollectionViewDelegate {
 
 // MARK: - Search methods
 
-extension FollowerListScreen: UISearchBarDelegate, UISearchResultsUpdating  {
+extension FollowerListScreen: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else {
+            filteredFollowers.removeAll()
+            updateData(on: followers)
+            isSearching = false
+            return
+        }
+
         isSearching = true
         filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
         updateData(on: filteredFollowers)
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        // Updates the collection view with the initial followers array when search ends
-        isSearching = false
-        updateData(on: followers)
     }
 }
 
