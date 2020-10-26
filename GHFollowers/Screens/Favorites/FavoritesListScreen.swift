@@ -88,9 +88,7 @@ extension FavoritesListScreen: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let favorite = favorites[indexPath.row]
-        let destinationScreen = FollowerListScreen()
-        destinationScreen.username = favorite.login
-        destinationScreen.title = favorite.login
+        let destinationScreen = FollowerListScreen(username: favorite.login)
         navigationController?.pushViewController(destinationScreen, animated: true)
     }
 
