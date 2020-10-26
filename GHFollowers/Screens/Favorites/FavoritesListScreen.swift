@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoritesListScreen: UIViewController {
+class FavoritesListScreen: GFDataLoadingViewController {
     // MARK: - Properties
 
     let favoritesTableView = UITableView()

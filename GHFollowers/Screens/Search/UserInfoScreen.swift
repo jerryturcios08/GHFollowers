@@ -104,7 +104,7 @@ class UserInfoScreen: UIViewController {
         self.add(GFUserInfoHeaderViewController(user: user), to: self.headerView)
         self.add(repoItemViewController, to: self.firstItemView)
         self.add(followerItemViewController, to: self.secondItemView)
-        self.dateLabel.text = "GitHub since \(user.createdAt.convertToDisplayFormat())"
+        self.dateLabel.text = "GitHub since \(user.createdAt.convertToMonthYearFormat())"
     }
 
     private func add(_ childViewController: UIViewController, to containerView: UIView) {

@@ -13,7 +13,7 @@ protocol FollowerListScreenDelegate: class {
     func didRequestFollowers(for username: String)
 }
 
-class FollowerListScreen: UIViewController {
+class FollowerListScreen: GFDataLoadingViewController {
     // MARK: - Properties
 
     enum Section { case main }
