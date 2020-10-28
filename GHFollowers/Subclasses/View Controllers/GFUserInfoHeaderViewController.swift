@@ -48,7 +48,7 @@ class GFUserInfoHeaderViewController: UIViewController {
     // MARK: - Defined methods
 
     private func configureAvatarImageView() {
-        avatarImageView.setImage(from: user.avatarUrl)
+        avatarImageView.setImage(fromURL: user.avatarUrl)
 
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),

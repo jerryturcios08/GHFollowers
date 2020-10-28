@@ -14,8 +14,6 @@ class SearchScreen: UIViewController {
     let usernameTextField = GFTextField()
     let callToActionButton = GFButton(backgroundColor: .systemGreen, title: "Get followers")
 
-    var logoImageViewTopContraint: NSLayoutConstraint!
-
     var isUsernameEntered: Bool { !usernameTextField.text!.isEmpty }
 
     // MARK: - Lifecycle methods
@@ -60,10 +58,9 @@ class SearchScreen: UIViewController {
         logoImageView.image = Images.ghLogo
 
         let topConstraintConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 20 : 80
-        logoImageViewTopContraint = logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstraintConstant)
-        logoImageViewTopContraint.isActive = true
 
         NSLayoutConstraint.activate([
+            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstraintConstant),
             logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoImageView.heightAnchor.constraint(equalToConstant: 200),
             logoImageView.widthAnchor.constraint(equalToConstant: 200)

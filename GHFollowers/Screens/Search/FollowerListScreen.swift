@@ -86,21 +86,25 @@ class FollowerListScreen: GFDataLoadingViewController {
 
             switch result {
             case .success(let followers):
-                if followers.count < 100 { self.hasMoreFollowers = false }
-                self.followers.append(contentsOf: followers)
-
-                // Shows an empty state view if no followers have been found
-                if self.followers.isEmpty {
-                    let message = "This user doesn't have any followers. Go follow them 😀."
-                    DispatchQueue.main.async { self.showEmptyStateView(with: message, in: self.view) }
-                } else {
-                    self.updateData(on: self.followers)
-                }
+                self.updateUI(with: followers)
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Okay")
             }
 
             self.isLoadingMoreFollowers = false
+        }
+    }
+
+    private func updateUI(with followers: [Follower]) {
+        if followers.count < 100 { self.hasMoreFollowers = false }
+        self.followers.append(contentsOf: followers)
+
+        // Shows an empty state view if no followers have been found
+        if self.followers.isEmpty {
+            let message = "This user doesn't have any followers. Go follow them 😀."
+            DispatchQueue.main.async { self.showEmptyStateView(with: message, in: self.view) }
+        } else {
+            self.updateData(on: self.followers)
         }
     }
 
@@ -129,21 +133,25 @@ class FollowerListScreen: GFDataLoadingViewController {
 
             switch result {
             case .success(let user):
-                let favorite = Follower(login: user.login, avatarUrl: user.avatarUrl)
-
-                PersistenceManager.updateWith(favorite: favorite, actionType: .add) { [weak self] error in
-                    guard let self = self else { return }
-
-                    guard let error = error else {
-                        self.presentGFAlertOnMainThread(title: "Success", message: "You have successfully favorited \(user.name ?? "this user") 🎉.", buttonTitle: "Horray!")
-                        return
-                    }
-
-                    self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Okay")
-                }
+                self.addUserToFavorites(user: user)
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Okay")
             }
+        }
+    }
+
+    private func addUserToFavorites(user: User) {
+        let favorite = Follower(login: user.login, avatarUrl: user.avatarUrl)
+
+        PersistenceManager.updateWith(favorite: favorite, actionType: .add) { [weak self] error in
+            guard let self = self else { return }
+
+            guard let error = error else {
+                self.presentGFAlertOnMainThread(title: "Success", message: "You have successfully favorited \(user.name ?? "this user") 🎉.", buttonTitle: "Horray!")
+                return
+            }
+
+            self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Okay")
         }
     }
 }
@@ -202,6 +210,7 @@ extension FollowerListScreen: UserInfoScreenDelegate {
         self.username = username
         title = username
         page = 1
+
         followers.removeAll()
         filteredFollowers.removeAll()
         updateData(on: followers)
