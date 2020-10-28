@@ -16,6 +16,9 @@ protocol UserInfoScreenDelegate: class {
 class UserInfoScreen: UIViewController {
     // MARK: - Properties
 
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+
     let headerView = UIView()
     let firstItemView = UIView()
     let secondItemView = UIView()
@@ -41,6 +44,7 @@ class UserInfoScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureScreen()
+        configureScrollView()
         configureLayout()
         getUserInfo()
     }
@@ -53,23 +57,35 @@ class UserInfoScreen: UIViewController {
         navigationItem.rightBarButtonItem = doneButton
     }
 
+    private func configureScrollView() {
+        view.addSubview(scrollView)
+        scrollView.pinToEdges(of: view)
+        scrollView.addSubview(contentView)
+        contentView.pinToEdges(of: scrollView)
+
+        NSLayoutConstraint.activate([
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: 600)
+        ])
+    }
+
     private func configureLayout() {
         let padding: CGFloat = 20
         let itemHeight: CGFloat = 140
         itemViews = [headerView, firstItemView, secondItemView, dateLabel]
 
         for itemView in itemViews {
-            view.addSubview(itemView)
+            contentView.addSubview(itemView)
             itemView.translatesAutoresizingMaskIntoConstraints = false
 
             NSLayoutConstraint.activate([
-                itemView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-                itemView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+                itemView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+                itemView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             ])
         }
 
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.topAnchor.constraint(equalTo: contentView.topAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 210),
             firstItemView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
             firstItemView.heightAnchor.constraint(equalToConstant: itemHeight),
