@@ -210,6 +210,8 @@ extension FollowerListScreen: UserInfoScreenDelegate {
         self.username = username
         title = username
         page = 1
+        hasMoreFollowers = true
+        isSearching = false
 
         followers.removeAll()
         filteredFollowers.removeAll()
