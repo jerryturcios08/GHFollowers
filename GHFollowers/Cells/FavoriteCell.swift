@@ -19,6 +19,7 @@ class FavoriteCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         accessoryType = .disclosureIndicator
+        addSubviews(avatarImageView, usernameLabel)
         configureAvatarImageView()
         configureUsernameLabel()
     }
@@ -35,8 +36,6 @@ class FavoriteCell: UITableViewCell {
     }
 
     private func configureAvatarImageView() {
-        addSubview(avatarImageView)
-
         NSLayoutConstraint.activate([
             avatarImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
@@ -46,8 +45,6 @@ class FavoriteCell: UITableViewCell {
     }
 
     private func configureUsernameLabel() {
-        addSubview(usernameLabel)
-
         NSLayoutConstraint.activate([
             usernameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             usernameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),

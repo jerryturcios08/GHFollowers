@@ -16,7 +16,6 @@ class GFItemInfoViewController: UIViewController {
     let actionButton = GFButton()
 
     var user: User
-    weak var delegate: UserInfoScreenDelegate!
 
     let padding: CGFloat = 20
 
@@ -35,6 +34,7 @@ class GFItemInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubviews(stackView, actionButton)
         configureViewController()
         configureStackView()
         configureActionButton()
@@ -48,7 +48,6 @@ class GFItemInfoViewController: UIViewController {
     }
 
     private func configureStackView() {
-        view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .equalSpacing
         stackView.addArrangedSubview(firstItemInfoView)
@@ -63,7 +62,6 @@ class GFItemInfoViewController: UIViewController {
     }
 
     private func configureActionButton() {
-        view.addSubview(actionButton)
         actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
 
         NSLayoutConstraint.activate([

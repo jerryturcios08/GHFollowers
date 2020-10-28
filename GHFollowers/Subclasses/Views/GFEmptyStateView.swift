@@ -17,6 +17,7 @@ class GFEmptyStateView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addSubviews(messageLabel, logoImageView)
         configureMessageLabel()
         configureLogoImageView()
     }
@@ -33,7 +34,6 @@ class GFEmptyStateView: UIView {
     // MARK: - Defined methods
 
     private func configureMessageLabel() {
-        addSubview(messageLabel)
         messageLabel.numberOfLines = 3
         messageLabel.textColor = .secondaryLabel
 
@@ -49,7 +49,6 @@ class GFEmptyStateView: UIView {
     }
 
     private func configureLogoImageView() {
-        addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         logoImageView.image = Images.emptyState
 

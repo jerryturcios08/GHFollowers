@@ -10,8 +10,7 @@ import UIKit
 // MARK: - Delegate
 
 protocol UserInfoScreenDelegate: class {
-    func didTapGitHubProfile(for user: User)
-    func didTapGetFollowers(for user: User)
+    func didRequestFollowers(for username: String)
 }
 
 class UserInfoScreen: UIViewController {
@@ -24,7 +23,7 @@ class UserInfoScreen: UIViewController {
     var itemViews = [UIView]()
 
     private var username: String
-    weak var delegate: FollowerListScreenDelegate!
+    weak var delegate: UserInfoScreenDelegate!
 
     // MARK: - Initializers
 
@@ -71,13 +70,13 @@ class UserInfoScreen: UIViewController {
 
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 180),
+            headerView.heightAnchor.constraint(equalToConstant: 210),
             firstItemView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
             firstItemView.heightAnchor.constraint(equalToConstant: itemHeight),
             secondItemView.topAnchor.constraint(equalTo: firstItemView.bottomAnchor, constant: padding),
             secondItemView.heightAnchor.constraint(equalToConstant: itemHeight),
             dateLabel.topAnchor.constraint(equalTo: secondItemView.bottomAnchor, constant: padding),
-            dateLabel.heightAnchor.constraint(equalToConstant: 18)
+            dateLabel.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 
@@ -95,15 +94,9 @@ class UserInfoScreen: UIViewController {
     }
 
     private func configureUserInterfaceElements(with user: User) {
-        let repoItemViewController = GFRepoItemViewController(user: user)
-        repoItemViewController.delegate = self
-
-        let followerItemViewController = GFFollowerItemViewController(user: user)
-        followerItemViewController.delegate = self
-
         self.add(GFUserInfoHeaderViewController(user: user), to: self.headerView)
-        self.add(repoItemViewController, to: self.firstItemView)
-        self.add(followerItemViewController, to: self.secondItemView)
+        self.add(GFRepoItemViewController(user: user, delegate: self), to: self.firstItemView)
+        self.add(GFFollowerItemViewController(user: user, delegate: self), to: self.secondItemView)
         self.dateLabel.text = "GitHub since \(user.createdAt.convertToMonthYearFormat())"
     }
 
@@ -121,9 +114,9 @@ class UserInfoScreen: UIViewController {
     }
 }
 
-// MARK: - User info methods
+// MARK: - Repo item methods
 
-extension UserInfoScreen: UserInfoScreenDelegate {
+extension UserInfoScreen: GFRepoItemViewControllerDelegate {
     func didTapGitHubProfile(for user: User) {
         guard let url = URL(string: user.htmlUrl) else {
             presentGFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid.", buttonTitle: "Okay")
@@ -132,7 +125,11 @@ extension UserInfoScreen: UserInfoScreenDelegate {
 
         presentSafariViewController(with: url)
     }
+}
 
+// MARK: - Follower item methods
+
+extension UserInfoScreen: GFFollowerItemViewControllerDelegate {
     func didTapGetFollowers(for user: User) {
         guard user.followers != 0 else {
             presentGFAlertOnMainThread(title: "No followers", message: "\(user.name ?? "This user") has no followers. What a shame 😞.", buttonTitle: "So sad")

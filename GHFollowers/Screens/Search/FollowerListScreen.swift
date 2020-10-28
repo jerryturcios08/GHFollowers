@@ -7,12 +7,6 @@
 
 import UIKit
 
-// MARK: - Delegate
-
-protocol FollowerListScreenDelegate: class {
-    func didRequestFollowers(for username: String)
-}
-
 class FollowerListScreen: GFDataLoadingViewController {
     // MARK: - Properties
 
@@ -130,7 +124,6 @@ class FollowerListScreen: GFDataLoadingViewController {
     // MARK: - Action methods
 
     @objc private func heartButtonTapped() {
-
         NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
             guard let self = self else { return }
 
@@ -201,9 +194,9 @@ extension FollowerListScreen: UISearchResultsUpdating {
     }
 }
 
-// MARK: - Follower list methods
+// MARK: - User info methods
 
-extension FollowerListScreen: FollowerListScreenDelegate {
+extension FollowerListScreen: UserInfoScreenDelegate {
     func didRequestFollowers(for username: String) {
         // Resets all values for screen before fetching followers for new user
         self.username = username
